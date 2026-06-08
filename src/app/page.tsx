@@ -53,40 +53,32 @@ const PROJECTS = [
     githubUrl: "https://github.com/dengyuanxing953-eng/mmld-yuanbao-skill",
   },
   {
+    title: "微信聊天记录导出到 AI 分析教程",
+    status: "文档已完成",
+    result: "从电脑微信记录导出 TXT / JSON / HTML，再交给 GPT、Claude、豆包进行关系复盘、信息整理和对话分析。",
+    whatIDid: [
+      "整理 wx_key 与 WeChatDataAnalysis 的使用流程",
+      "设计从 DB Key 提取到聊天记录导出的完整步骤",
+      "规划 TXT / JSON / HTML 多格式导出说明",
+      "补充 ChatGPT / Claude / 豆包分析聊天记录的提示词",
+    ],
+    tags: ["微信导出", "AI分析", "数据整理", "小白教程"],
+    githubUrl: undefined,
+    link: "#cases",
+    linkLabel: "查看教程",
+    secondaryLabel: "即将开放",
+  },
+  {
     title: "OPC：Owner-CEO-Worker Agent 架构",
     status: "建设中",
-    result: "三层 Agent 调度系统，实现全自动桌面接管",
+    result: "把人类决策、Agent 统筹和桌面执行拆成三层，让 AI 工作流更容易管理。",
     whatIDid: [
-      "设计三层 Agent 调度架构",
-      "小九总指挥、CC 文官、龙虾武将分工",
-      "飞书群消息自动分发与执行",
+      "设计 Owner / CEO / Worker 三层架构",
+      "明确 GPT、Claude、Hermes、OpenClaw 分工",
+      "沉淀自动化任务分发思路",
     ],
     tags: ["Agent", "自动化", "架构设计"],
     githubUrl: undefined,
-  },
-  {
-    title: "AI 学习笔记系统",
-    status: "建设中",
-    result: "84 天冲刺计划，AI 辅助刷题与知识图谱构建",
-    whatIDid: [
-      "制定高数 + 计算机基础学习计划",
-      "AI 辅助错题分析与知识点归纳",
-      "笔记结构化沉淀为可检索资产",
-    ],
-    tags: ["学习", "备考", "知识管理"],
-    githubUrl: undefined,
-  },
-  {
-    title: "微信聊天记录导出教程",
-    status: "已上线",
-    result: "Apple 风格教程页，教用户导出并分析微信聊天记录",
-    whatIDid: [
-      "梳理微信 PC 数据解密流程",
-      "设计分步式教程页面",
-      "覆盖 wx_key + WeChatDataAnalysis 工具链",
-    ],
-    tags: ["教程", "微信", "数据分析"],
-    link: "/wechat-tutorial.html",
   },
 ];
 
@@ -114,10 +106,10 @@ const METHODOLOGY = [
 ];
 
 const STATS = [
-  { value: "3", label: "真实业务案例" },
-  { value: "5", label: "SOP 标准流程" },
-  { value: "12", label: "学习笔记资产" },
-  { value: "2", label: "Agent 工作流" },
+  { value: "1", label: "开源 Skill" },
+  { value: "1", label: "完整教程" },
+  { value: "1", label: "架构草案" },
+  { value: "3", label: "展示项目" },
 ];
 
 export default function Home() {
@@ -216,8 +208,8 @@ export default function Home() {
               <div className="space-y-3">
                 {[
                   { label: "已开源资产", value: "01" },
-                  { label: "建设中项目", value: "02" },
-                  { label: "SOP / Skill 文档", value: "01" },
+                  { label: "已完成文档", value: "01" },
+                  { label: "建设中项目", value: "01" },
                 ].map((item) => (
                   <div
                     key={item.label}
@@ -311,7 +303,7 @@ export default function Home() {
               实战沉淀
             </h2>
             <p className="mt-3 text-[14px] text-zinc-500">
-              目前已开源 MMLD-Yuanbao Skill 和微信教程页，其他项目正在整理中。
+              目前已开源 MMLD-Yuanbao Skill，并完成微信聊天记录导出到 AI 分析教程文档，OPC Agent 工作流正在整理为可公开展示的版本。
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
@@ -330,6 +322,8 @@ export default function Home() {
                         ? "bg-emerald-50 text-emerald-600"
                         : proj.status === "已上线"
                         ? "bg-emerald-50 text-emerald-600"
+                        : proj.status === "文档已完成"
+                        ? "bg-blue-50 text-blue-600"
                         : proj.status === "建设中"
                         ? "bg-zinc-100 text-zinc-500"
                         : proj.status === "实战中"
@@ -368,11 +362,11 @@ export default function Home() {
                   {proj.link ? (
                     <a
                       href={proj.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={proj.link.startsWith("http") ? "_blank" : undefined}
+                      rel={proj.link.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="text-[13px] font-medium text-blue-600 transition hover:text-blue-800"
                     >
-                      查看教程 →
+                      {proj.linkLabel || "查看详情"} →
                     </a>
                   ) : (
                     <button className="text-[13px] font-medium text-zinc-400 transition hover:text-zinc-900">
@@ -388,6 +382,10 @@ export default function Home() {
                     >
                       GitHub →
                     </a>
+                  ) : proj.secondaryLabel ? (
+                    <span className="text-[13px] font-medium text-zinc-300 cursor-not-allowed">
+                      {proj.secondaryLabel}
+                    </span>
                   ) : !proj.link ? (
                     <span className="text-[13px] font-medium text-zinc-300 cursor-not-allowed">
                       整理中
@@ -461,8 +459,8 @@ export default function Home() {
               <div className="space-y-3">
                 {[
                   "GEO 与本地生活 AI 获客",
+                  "数据导出与 AI 分析教程",
                   "Agent / OPC 自动化工作流",
-                  "AI 学习笔记与知识资产管理",
                 ].map((item) => (
                   <div
                     key={item}
