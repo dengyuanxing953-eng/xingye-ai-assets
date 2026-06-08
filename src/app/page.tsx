@@ -76,6 +76,18 @@ const PROJECTS = [
     tags: ["学习", "备考", "知识管理"],
     githubUrl: undefined,
   },
+  {
+    title: "微信聊天记录导出教程",
+    status: "已上线",
+    result: "Apple 风格教程页，教用户导出并分析微信聊天记录",
+    whatIDid: [
+      "梳理微信 PC 数据解密流程",
+      "设计分步式教程页面",
+      "覆盖 wx_key + WeChatDataAnalysis 工具链",
+    ],
+    tags: ["教程", "微信", "数据分析"],
+    link: "/wechat-tutorial.html",
+  },
 ];
 
 const METHODOLOGY = [
@@ -299,7 +311,7 @@ export default function Home() {
               实战沉淀
             </h2>
             <p className="mt-3 text-[14px] text-zinc-500">
-              目前已开源 MMLD-Yuanbao Skill，其他项目正在整理为可公开展示的版本。
+              目前已开源 MMLD-Yuanbao Skill 和微信教程页，其他项目正在整理中。
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
@@ -353,9 +365,20 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-auto flex items-center gap-3 pt-4">
-                  <button className="text-[13px] font-medium text-zinc-400 transition hover:text-zinc-900">
-                    查看详情 →
-                  </button>
+                  {proj.link ? (
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[13px] font-medium text-blue-600 transition hover:text-blue-800"
+                    >
+                      查看教程 →
+                    </a>
+                  ) : (
+                    <button className="text-[13px] font-medium text-zinc-400 transition hover:text-zinc-900">
+                      查看详情 →
+                    </button>
+                  )}
                   {proj.githubUrl ? (
                     <a
                       href={proj.githubUrl}
@@ -365,11 +388,11 @@ export default function Home() {
                     >
                       GitHub →
                     </a>
-                  ) : (
+                  ) : !proj.link ? (
                     <span className="text-[13px] font-medium text-zinc-300 cursor-not-allowed">
                       整理中
                     </span>
-                  )}
+                  ) : null}
                 </div>
               </div>
             ))}
